@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/ll_liner"
+    >
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/LL_drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <!--HomeFragment自己的页面-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/framelayout_shou"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                tools:ignore="Suspicious0dp" />
+
+            <RadioGroup
+                android:id="@+id/main_radio"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/bottom_tab_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingTop="2dp">
+
+                <RadioButton
+                    android:id="@+id/rb_function"
+                    style="@style/main_tab_bottom"
+                    android:drawableTop="@drawable/icon_function"
+                    android:text="@string/tab_function" />
+
+                <RadioButton
+                    android:id="@+id/rb_news_center"
+                    style="@style/main_tab_bottom"
+                    android:drawableTop="@drawable/icon_newscenter"
+                    android:text="@string/tab_news_center" />
+
+                <RadioButton
+                    android:id="@+id/rb_smart_service"
+                    style="@style/main_tab_bottom"
+                    android:drawableTop="@drawable/icon_smartservice"
+                    android:text="@string/tab_smart_service" />
+
+                <RadioButton
+                    android:id="@+id/rb_gov_affairs"
+                    style="@style/main_tab_bottom"
+                    android:drawableTop="@drawable/icon_govaffairs"
+                    android:text="@string/tab_gov_affairs" />
+
+                <RadioButton
+                    android:id="@+id/rb_setting"
+                    style="@style/main_tab_bottom"
+                    android:drawableTop="@drawable/icon_setting"
+                    android:text="@string/tab_setting" />
+            </RadioGroup>
+        </LinearLayout>
+        <!--左侧菜单-->
+        <!--layout_gravity控制菜单显示的侧面位置  left就是左侧，right就是右侧-->
+        <LinearLayout
+            android:id="@+id/ll_left"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@color/colorPrimary"
+            android:fitsSystemWindows="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            tools:ignore="RtlHardcoded">
+
+            <!--fitsSystemWindows控制布局在沉浸状态时保持内容在状态栏以下-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+</LinearLayout>
