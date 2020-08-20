@@ -71,7 +71,7 @@ public class NewsFragment extends Fragment{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(newsAdapter);
         newsAdapter.setAnimationEnable(true);
-        newsAdapter.setList(list);
+
 
     }
     //轮播图数据
@@ -120,6 +120,7 @@ public class NewsFragment extends Fragment{
         BaseBean<List<NewsBean>> baseBean = new Gson().fromJson(jsonString, new TypeToken<BaseBean<List<NewsBean>>>() {}.getType());
         if(baseBean.isSuccess()){
             List<NewsBean> list=baseBean.data;
+            newsAdapter.setList(list);
         }
     }
 
