@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.smm.newscoorer.adapter.HomeAdapter;
 import com.smm.newscoorer.bean.BaseBean;
 import com.smm.newscoorer.bean.NewsBean;
 import com.smm.newscoorer.R;
+import com.youth.banner.Banner;
+import com.youth.banner.indicator.CircleIndicator;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -25,57 +28,44 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import okhttp3.Call;
 
 public class NewsFragment extends Fragment{
+    private View view;
     String url = "http://192.168.43.28:8080/zhbj/categories.json";
-    static final int NUM_ITEMS = 4;
-    private List<Fragment> fragmentList = new ArrayList<Fragment>();
-    private String[] strings = new String[]{"A","B","C","D"};
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        getList();
-//        initView();
-    }
+    ArrayList<String> bannerList ;
+    List<NewsBean> list;
+//    @Override
+//    public void onCreate(@Nullable Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        getList();
+////        initNews();
+//    }
 
     @Nullable
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.newscourr, container, false);
+        view = inflater.inflate(R.layout.newscourr, container, false);
         Log.e("liuxing", "创建--NewsFragment");
+        getList();
+        initNews();
+        Log.e("liuxing", String.valueOf(list));
         return view;
     }
-//    private void initView(){
-//        fragmentList.add(new fragmentA());
-//        fragmentList.add(new fragmentB());
-//        fragmentList.add(new fragmentC());
-//        fragmentList.add(new fragmentD());
-//        TableLayout tab_layout = findViewById(R.id.tab_layout);
-//        ViewPager viewPager = findViewById(R.id.viewPager);
-//        MyAdapter fragmentAdater = new  MyAdapter(getSupportFragmentManager());
-//        viewPager.setAdapter(fragmentAdater);
-//        tab_layout.setupWithViewPager(viewPager);
-//    }
-    public class MyAdapter extends FragmentPagerAdapter {
+    public void initNews(){
+        initBannerData();//获取数据
+//        轮播图控件设置
+        Banner banner_home= view.findViewById(R.id.banner_home);
+        HomeAdapter BannerAdapter = new HomeAdapter(getActivity(),bannerList);
+        banner_home.setAdapter(BannerAdapter);
+        //设置轮播图底部小圆点
+        banner_home.setIndicator(new CircleIndicator(getActivity()));
 
-
-        public MyAdapter(@NonNull FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_ITEMS;
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragmentList.get(position);
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return strings[position];
-        }
+    }
+    //轮播图数据
+    private void initBannerData() {
+        bannerList = new ArrayList<String>();
+        bannerList.add("http://www.g12e.com/upload/html/2007/8/31/liqion947200783110451392826.jpg");
+        bannerList.add("http://p4.so.qhmsg.com/t01fba97e00c6a49a89.jpg");
+        bannerList.add("http://up.enterdesk.com/edpic_source/df/66/f6/df66f62a97c8e6488ded53ce326b3cb2.jpg");
+        bannerList.add("http://pic39.nipic.com/20140308/251960_174116725000_2.jpg");
+        bannerList.add("http://p0.so.qhmsg.com/t01fc496abc036fab17.jpg");
     }
     public void getList() {
         OkHttpUtils.get().url(url)
