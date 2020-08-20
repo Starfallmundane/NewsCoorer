@@ -16,7 +16,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class NewsAdapter<CategoryBean> extends BaseQuickAdapter<CategoryBean, BaseViewHolder> {
+public class NewsAdapter<CategoryBean> extends BaseQuickAdapter<CategoryBean, BaseViewHolder> implements LoadMoreModule{
     public NewsAdapter(List<CategoryBean> data) {
         super(R.layout.news_item);
     }
