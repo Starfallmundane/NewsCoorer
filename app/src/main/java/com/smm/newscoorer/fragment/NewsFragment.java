@@ -45,7 +45,6 @@ public class NewsFragment extends Fragment{
         Log.e("liuxing", "创建--NewsFragment");
         getList();
         initNews();
-        Log.e("liuxing", String.valueOf(list));
         return view;
     }
     public void initNews(){
