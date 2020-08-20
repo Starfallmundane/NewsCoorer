@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import okhttp3.Call;
 
 public class NewsFragment extends Fragment{
@@ -37,6 +38,7 @@ public class NewsFragment extends Fragment{
     List<NewsBean> list;
     NewsAdapter newsAdapter;
     RecyclerView mRecyclerView;
+    SwipeRefreshLayout srl_home;
 //    @Override
 //    public void onCreate(@Nullable Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
@@ -71,8 +73,20 @@ public class NewsFragment extends Fragment{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(newsAdapter);
         newsAdapter.setAnimationEnable(true);
+        initRecv();
+//        getList();
 
 
+    }
+    private void initRecv(){
+        srl_home=view.findViewById(R.id.srl_home);
+        srl_home.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+//                请求网络数据
+                getList();
+            }
+        });
     }
     //轮播图数据
     private void initBannerData() {
@@ -108,20 +122,22 @@ public class NewsFragment extends Fragment{
          * 1. 要解析的json字符串
          * 2. 安装哪个Javabean解析
          */
-//        BaseBean baseBean = gson.fromJson(jsonString, BaseBean.class);
-//        if (baseBean.isSuccess()) {
-//            BaseBean<List<NewsBean>> data = new Gson().fromJson(jsonString, new TypeToken<BaseBean<List<NewsBean>>>() {}.getType());
-//            Log.e("liuxing", data.toString());
-//            NewsBean mNewsBean=  data.data.get(0);
-//            Log.e("liuxing", mNewsBean.title);
-//        }
+        BaseBean baseBean = gson.fromJson(jsonString, BaseBean.class);
+        if (baseBean.isSuccess()) {
+            BaseBean<List<NewsBean>> data = new Gson().fromJson(jsonString, new TypeToken<BaseBean<List<NewsBean>>>() {}.getType());
+            Log.e("liuxing", data.toString());
+            NewsBean mNewsBean= (NewsBean) data.data.get(0);
+            Log.e("liuxing", mNewsBean.title);
+            newsAdapter.setList(mNewsBean.children);
 
-
-        BaseBean<List<NewsBean>> baseBean = new Gson().fromJson(jsonString, new TypeToken<BaseBean<List<NewsBean>>>() {}.getType());
-        if(baseBean.isSuccess()){
-            List<NewsBean> list=baseBean.data;
-            newsAdapter.setList(list);
         }
+
+
+//        BaseBean<List<NewsBean>> baseBean = new Gson().fromJson(jsonString, new TypeToken<BaseBean<List<NewsBean>>>() {}.getType());
+//        if(baseBean.isSuccess()){
+//            List<NewsBean> list=baseBean.data;
+//            newsAdapter.setList(list);
+//        }
     }
 
 }
